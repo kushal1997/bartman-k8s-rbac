@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: qa-read-all
+rules:
+- apiGroups: ["", "apps", "extensions"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: qa-read-all-binding
+subjects:
+- kind: ServiceAccount
+  name: qa-team
+  namespace: qa
+roleRef:
+  kind: ClusterRole
+  name: qa-read-all
+  apiGroup: rbac.authorization.k8s.io
