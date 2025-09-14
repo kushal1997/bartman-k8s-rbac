@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finx-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finx-flask
+  template:
+    metadata:
+      labels:
+        app: finx-flask
+    spec:
+      containers:
+      - name: flask
+        image: noizy23yo/bartman:k8_rbac_v1
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finx-flask
+spec:
+  type: ClusterIP
+  selector:
+    app: finx-flask
+  ports:
+  - port: 80
+    targetPort: 5000
